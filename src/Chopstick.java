@@ -1,14 +1,16 @@
 
 public class Chopstick {
     private boolean taken = false;
-
     private int value;
+
     public Chopstick() {
         value = 0;
     }
+
     public Chopstick(int v) {
         value = v;
     }
+
     public synchronized void P() {//opuszczanie
         while (value <= 0) {
             try {
@@ -17,14 +19,20 @@ public class Chopstick {
             }
         }
         value--;
-
+        taken = false;
     }
-    public synchronized void V(){//podnoszenie
+
+    public synchronized void V() {//podnoszenie
         ++value;
-        notify();
+        taken = true;
+        notifyAll();
     }
 
     public int getValue() {
         return value;
+    }
+
+    public boolean isTaken() {
+        return taken;
     }
 }
